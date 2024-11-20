@@ -1,0 +1,129 @@
+<div *ngIf="error" class="alert alert-danger">{{error}}</div>
+<div *ngIf="success" class="alert alert-success">{{success}}</div>
+
+<div id="theForm">
+  <div class="container">
+  <h2>Movie Form</h2>
+  
+  
+  <form #f="ngForm" name="movieForm" (ngSubmit)="addMovie(f)">
+    <div class="table-responsive">
+      <table class="table table-bordered table-striped">
+        <thead>
+          <tr>
+            <th>Movie Name</th>
+            <th>Genre</th>
+            <th>Rating</th>
+            <th>Year Made</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Movie Name -->
+          <tr>
+            <td>
+              <label for="movieName">Movie Name</label>
+              <input
+                type="text"
+                id="movieName"
+                name="movieName"
+                class="form-control"
+                [(ngModel)]="movie.movieName"
+                required
+              />
+              <div
+                class="invalid-feedback"
+                *ngIf="f.controls['movieName']?.errors?.['required'] && f.controls['movieName']?.touched"
+              >
+                Movie name is required
+              </div>
+            </td>
+            <td>
+              <label for="genre">Genre</label>
+              <input
+                type="text"
+                id="genre"
+                name="genre"
+                class="form-control"
+                [(ngModel)]="movie.genre"
+                required
+              />
+              <div
+                class="invalid-feedback"
+                *ngIf="f.controls['genre']?.errors?.['required'] && f.controls['genre']?.touched"
+              >
+                Genre is required
+              </div>
+            </td>
+            <td>
+              <label for="rating">Rating</label>
+              <input
+                type="text"
+                id="rating"
+                name="rating"
+                class="form-control"
+                [(ngModel)]="movie.rating"
+                required
+              />
+              <div
+                class="invalid-feedback"
+                *ngIf="f.controls['rating']?.errors?.['required'] && f.controls['rating']?.touched"
+              >
+                Rating is required
+              </div>
+            </td>
+            <td>
+              <label for="yearMade">Year Made</label>
+              <input
+                type="text"
+                id="yearMade"
+                name="yearMade"
+                class="form-control"
+                [(ngModel)]="movie.yearMade"
+              />
+            </td>
+          </tr>
+  
+          <!-- Submit Button -->
+          <tr>
+            <td colspan="4" class="text-center">
+              <button
+                type="submit"
+                class="btn btn-primary btn-sm"
+                [disabled]="f.invalid"
+              >
+                Add Movie
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </form>
+  
+</div>
+</div>
+
+<div id="theList">
+ 
+  <div class="container">
+    <h2>Movie List</h2>
+    <table class="table table-bordered table-striped">
+      <thead>
+        <tr>
+          <th>Movie Name</th>
+          <th>Genre</th>
+          <th>Rating</th>
+          <th>Year Made</th>
+        </tr>
+      </thead>
+      <tr *ngFor="let movie of movies">
+        <td>{{ movie.movieName }}</td>
+        <td>{{ movie.genre }}</td>
+        <td>{{ movie.rating }}</td>
+        <td>{{ movie.yearMade }}</td>
+      </tr>
+      
+    </table>
+  </div>
+  
+</div>
