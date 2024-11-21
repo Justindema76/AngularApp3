@@ -13,7 +13,7 @@
           <tr>
             <th>Movie Name</th>
             <th>Genre</th>
-            <th>Rating</th>
+            <th>Rating 1-10</th>
             <th>Year Made</th>
           </tr>
         </thead>
@@ -21,7 +21,7 @@
           <!-- Movie Name -->
           <tr>
             <td>
-              <label for="movieName">Movie Name</label>
+              
               <input
                 type="text"
                 id="movieName"
@@ -37,16 +37,27 @@
                 Movie name is required
               </div>
             </td>
+
+            <!-- GENRE -->
             <td>
-              <label for="genre">Genre</label>
-              <input
-                type="text"
+             
+              <select
                 id="genre"
                 name="genre"
                 class="form-control"
                 [(ngModel)]="movie.genre"
                 required
-              />
+              >
+                <option value="" disabled>Select Genre</option>
+                <option value="Action">Action</option>
+                <option value="Comedy">Comedy</option>
+                <option value="Drama">Drama</option>
+                <option value="Horror">Horror</option>
+                <option value="Romance">Romance</option>
+                <option value="Sci-Fi">Sci-Fi</option>
+                <option value="Thriller">Thriller</option>
+                <!-- Add more options as necessary -->
+              </select>
               <div
                 class="invalid-feedback"
                 *ngIf="f.controls['genre']?.errors?.['required'] && f.controls['genre']?.touched"
@@ -54,8 +65,9 @@
                 Genre is required
               </div>
             </td>
+            <!-- RATING -->
             <td>
-              <label for="rating">Rating</label>
+              
               <input
                 type="text"
                 id="rating"
@@ -71,8 +83,10 @@
                 Rating is required
               </div>
             </td>
+
+            <!-- YEAR MADE -->
             <td>
-              <label for="yearMade">Year Made</label>
+              
               <input
                 type="text"
                 id="yearMade"
@@ -85,7 +99,7 @@
   
           <!-- Submit Button -->
           <tr>
-            <td colspan="4" class="text-center">
+            <td colspan="12" class="text-center">
               <button
                 type="submit"
                 class="btn btn-primary btn-sm"
@@ -94,12 +108,26 @@
                 Add Movie
               </button>
             </td>
+            </tr>
+            <tr>
+              <!-- UPDATE BUTTON -->
+              <!-- <td colspan="12" class="text-center">
+                <button
+                  type="button"
+                  value="Update"
+                  class="btn btn-primary btn-sm"
+                  (click)="updateMovie(movie.movieName, movie.genre, movie.rating, movie.yearMade, item.movieID)"
+                  [disabled]="movie.invalmovieID || f.invalid">
+                  Update Movie
+                </button>
+              </td> -->
+              
           </tr>
+
         </tbody>
       </table>
     </div>
   </form>
-  
 </div>
 </div>
 
@@ -108,21 +136,49 @@
   <div class="container">
     <h2>Movie List</h2>
     <table class="table table-bordered table-striped">
-      <thead>
+      <thead class="table-light">
         <tr>
           <th>Movie Name</th>
           <th>Genre</th>
           <th>Rating</th>
           <th>Year Made</th>
+          <th>Edit Movie</th>
+          <th>Add Movie</th>
         </tr>
       </thead>
-      <tr *ngFor="let movie of movies">
-        <td>{{ movie.movieName }}</td>
-        <td>{{ movie.genre }}</td>
-        <td>{{ movie.rating }}</td>
-        <td>{{ movie.yearMade }}</td>
-      </tr>
-      
+      <tbody>
+        <tr *ngFor="let movie of movies">
+          <td>{{ movie.movieName }}</td>
+          <td>{{ movie.genre }}</td>
+          <td>{{ movie.rating }}</td>
+          <td>{{ movie.yearMade }}</td>
+          <td>
+             <!--  Button -->
+            <button
+              class="btn btn-success btn-sm"
+              >
+              
+              Edit
+            </button>
+          </td>
+          <td>
+            <!-- Delete Button -->
+            <button
+              type="button"
+              value="Delete"
+              class="btn btn-danger btn-sm"
+              (click)="deleteMovie(movie.movieID? movie.movieID:0)"
+              [disabled]="">
+              Delete
+            </button>
+          </td>
+          
+        </tr>
+                 
+                  
+               
+                  
+      </tbody>
     </table>
   </div>
   
