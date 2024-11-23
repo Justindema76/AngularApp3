@@ -15,7 +15,18 @@ export class AppComponent implements OnInit {
   movie: Movie = {movieName: '', genre: '', rating: '', yearMade: '', imageName: '', movieID: ''};
   error = '';
   success = '';
-  isEditing: boolean = false;
+  
+  genres: string[] = [
+    'Action',
+    'Comedy',
+    'Drama',
+    'Horror',
+    'Romance',
+    'Sci-Fi',
+    'Thriller',
+    'Crime'
+  ];
+  
  
 
   constructor(private movieService: MovieService) {}
@@ -59,34 +70,20 @@ export class AppComponent implements OnInit {
       }
     );
   }
-  // updateMovie(movieName: any, genre: any, rating: any, yearMade: any, movieID: any) {
-  //   this.resetAlerts();
-
-  //   this.movieService
-  //     .update({
-  //       movieName: movieName.value, genre: genre.value, rating: rating.value, yearMade: yearMade.value, movieID: +movieID})
-  //     .subscribe(
-  //       (res) => {
-  //         this.success = 'Updated successfully';
-  //       },
-  //       (err) => (this.error = err)
-  //     );
-  // }
-  // Edit movie
-  editMovie(selectedMovie: Movie): void {
+  editMovie(movieName: any, genre: string, rating: any, yearMade: any, movieID: any) {
     this.resetAlerts();
-    this.movie = { ...selectedMovie };
-    this.isEditing = true;
-  }
-  deleteMovie(movieID: number) {
-    this.resetAlerts();
-    this.movieService.delete(movieID).subscribe(
+  
+    const updatedMovie = {
+      movieName: movieName.value,
+      genre: genre, // Ensure genre is directly passed as a string
+      rating: rating.value,
+      yearMade: yearMade.value,
+      movieID: +movieID,
+    };
+  
+    this.movieService.edit(updatedMovie).subscribe(
       (res) => {
-        this.movies = this.movies.filter(function (item) {
-          return item['movieID'] && +item['movieID'] !== +movieID;
-        });
-
-        this.success = 'Deleted successfully';
+        this.success = 'Updated {{movie.genre}} successfully';
       },
       (err) => (this.error = err)
     );
@@ -94,5 +91,21 @@ export class AppComponent implements OnInit {
   
   
 
+  
+  // deleteMovie(movieID: number): void {
+  //   this.movieService.delete(movieID).subscribe(
+  //     () => {
+  //       this.movies = this.movies.filter(movie => movie.movieID !== movieID);
+  //       this.success = 'Movie deleted successfully!';
+  //     },
+  //     (err) => {
+  //       this.error = 'Failed to delete movie: ' + err.message;
+  //     }
+  //   );
+  // }
+  }
+ 
+  
 
-}
+
+

@@ -24,21 +24,19 @@ export class MovieService {
 
   // Add a new movie
   add(movie: Movie): Observable<Movie> {
-    return this.http.post(`${this.baseUrl}/add`, { data: movie }).pipe(
+    return this.http.post(`${this.baseUrl}/add`, {data: movie}).pipe(
       map((res: any) => {
         return res['data'];
       })
     );
   }
 
-  update(movie: Movie) {
-    return this.http.put(`${this.baseUrl}/update`, { data: movie });
+  edit(movie: Movie) {
+    return this.http.put(`${this.baseUrl}/edit`, {data: movie});
   }
 
-  delete(movieID: any) {
-    const params = new HttpParams()
-      .set('movieID', movieID.toString());
-
+  delete(movieID: number): Observable<any> {
+    const params = new HttpParams().set('movieID', movieID.toString());
     return this.http.delete(`${this.baseUrl}/delete`, { params: params });
   }
 }

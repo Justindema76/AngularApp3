@@ -1,3 +1,11 @@
 #theForm, #theList{
 padding: 10px;
 }
+
+.is-valid {
+  border: 2px solid green;
+}
+
+.is-invalid {
+  border: 2px solid red;
+}

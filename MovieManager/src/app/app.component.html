@@ -37,7 +37,6 @@
                 Movie name is required
               </div>
             </td>
-
             <!-- GENRE -->
             <td>
              
@@ -56,6 +55,7 @@
                 <option value="Romance">Romance</option>
                 <option value="Sci-Fi">Sci-Fi</option>
                 <option value="Thriller">Thriller</option>
+                <option value="Crime">Crime</option>
                 <!-- Add more options as necessary -->
               </select>
               <div
@@ -110,17 +110,7 @@
             </td>
             </tr>
             <tr>
-              <!-- UPDATE BUTTON -->
-              <!-- <td colspan="12" class="text-center">
-                <button
-                  type="button"
-                  value="Update"
-                  class="btn btn-primary btn-sm"
-                  (click)="updateMovie(movie.movieName, movie.genre, movie.rating, movie.yearMade, item.movieID)"
-                  [disabled]="movie.invalmovieID || f.invalid">
-                  Update Movie
-                </button>
-              </td> -->
+             
               
           </tr>
 
@@ -143,41 +133,68 @@
           <th>Rating</th>
           <th>Year Made</th>
           <th>Edit Movie</th>
-          <th>Add Movie</th>
+          <th>Delete Movie</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let movie of movies">
-          <td>{{ movie.movieName }}</td>
-          <td>{{ movie.genre }}</td>
-          <td>{{ movie.rating }}</td>
-          <td>{{ movie.yearMade }}</td>
+        <tr *ngFor="let movie of movies; let i = index;">
           <td>
-             <!--  Button -->
-            <button
-              class="btn btn-success btn-sm"
-              >
-              
-              Edit
-            </button>
+            <input type="text"
+            [(ngModel)]="movies[i].movieName"
+            class="form-control"
+            required
+            #movieName="ngModel"
+            [ngClass]="{ 'is-valid': movieName.touched && movieName.valid, 'is-invalid': movieName.touched && movieName.invalid }">
           </td>
           <td>
-            <!-- Delete Button -->
+            <select
+              [(ngModel)]="movies[i].genre"
+              class="form-control"
+              required
+              #genre="ngModel"
+              [ngClass]="{ 'is-valid': genre.touched && genre.valid, 'is-invalid': genre.touched && genre.invalid }"
+            >
+              <option value="" disabled>Select Genre</option>
+              <option *ngFor="let g of genres" [value]="g">{{ g }}</option>
+            </select>
+          </td>
+          
+          <td>
+            <input type="text"
+            [(ngModel)]="movies[i].rating"
+            class="form-control"
+            required
+            #rating="ngModel"
+            [ngClass]="{ 'is-valid': rating.touched && rating.valid, 'is-invalid': rating.touched && rating.invalid }">
+          </td>
+          <td>
+            <input type="text"
+            [(ngModel)]="movies[i].yearMade"
+            class="form-control"
+            required
+            #yearMade="ngModel"
+            [ngClass]="{ 'is-valid': yearMade.touched && yearMade.valid, 'is-invalid': yearMade.touched && yearMade.invalid }">
+          </td>
+          <!-- edit BUTTON -->
+          <td >
             <button
+            class="btn btn-success btn-sm"
+            [disabled]="movieName.invalid || genre.invalid || rating.invalid || yearMade.invalid"
+            (click)="editMovie(movieName, genre.value, rating, yearMade, movie.movieID)">
+            Edit
+          </button>
+          </td>
+          <td><!-- Delete Button -->
+            <!-- <button
               type="button"
               value="Delete"
               class="btn btn-danger btn-sm"
-              (click)="deleteMovie(movie.movieID? movie.movieID:0)"
-              [disabled]="">
+              (click)="deleteMovie(movie.movieID)"
+              >
               Delete
-            </button>
+            </button> -->
           </td>
-          
         </tr>
-                 
-                  
-               
-                  
       </tbody>
     </table>
   </div>
