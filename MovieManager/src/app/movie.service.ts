@@ -31,8 +31,8 @@ export class MovieService {
     );
   }
 
-  edit(movie: Movie) {
-    return this.http.put(`${this.baseUrl}/edit`, {data: movie});
+  update(movie: Movie) {
+    return this.http.put(`${this.baseUrl}/update`, {data: movie});
   }
 
   delete(movieID: any) {

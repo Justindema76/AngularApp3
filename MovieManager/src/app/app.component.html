@@ -4,8 +4,6 @@
 <div id="theForm">
   <div class="container">
   <h2>Movie Form</h2>
-  
-  
   <form #f="ngForm" name="movieForm" (ngSubmit)="addMovie(f)">
     <div class="table-responsive">
       <table class="table table-bordered table-striped">
@@ -67,26 +65,21 @@
             </td>
             <!-- RATING -->
             <td>
-              
               <input
-                type="text"
-                id="rating"
-                name="rating"
-                class="form-control"
-                [(ngModel)]="movie.rating"
-                required
-              />
-              <div
-                class="invalid-feedback"
-                *ngIf="f.controls['rating']?.errors?.['required'] && f.controls['rating']?.touched"
-              >
-                Rating is required
-              </div>
-            </td>
-
+              type="text"
+              id="rating"
+              name="rating"
+              class="form-control"
+              [(ngModel)]="movie.rating"
+              required
+              placeholder="Enter a number between 1 and 10"
+            />
+            <div class="invalid-feedback" *ngIf="error">
+              {{ error }}
+            </div>
+              </td>
             <!-- YEAR MADE -->
             <td>
-              
               <input
                 type="text"
                 id="yearMade"
@@ -130,7 +123,7 @@
           <th>Genre</th>
           <th>Rating</th>
           <th>Year Made</th>
-          <th>Edit</th>
+          <th>Update</th>
           <th>Delete</th>
         </tr>
       </thead>
@@ -173,13 +166,13 @@
             #yearMade="ngModel"
             [ngClass]="{ 'is-valid': yearMade.touched && yearMade.valid, 'is-invalid': yearMade.touched && yearMade.invalid }">
           </td>
-          <!-- edit BUTTON -->
+          <!-- UPDATE BUTTON -->
           <td >
             <button
             class="btn btn-success btn-sm"
             [disabled]="movieName.invalid || genre.invalid || rating.invalid || yearMade.invalid"
-            (click)="editMovie(movieName, genre.value, rating, yearMade, movie.movieID)">
-            Edit
+            (click)="updateMovie(movieName, genre.value, rating, yearMade, movie.movieID)">
+            Update
           </button>
           </td>
           <td><!-- Delete Button -->
