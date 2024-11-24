@@ -1,14 +1,21 @@
 # AngularApp3 Movie Manager App
-AngularApp Assignment#3
+AngularApp Assignment#3 - EDIT AND DELETE FUNCTIONALITY ADDED
 
-This is an Angular-based movie manager application that allows users to view, add, and manage movies. The app connects to a backend API (`MovieAPI`) and uses a `movie_manager` database to store movie details.
+This is an Angular-based movie manager application that enables users to view, add, edit, and delete movies. The app integrates with a backend API (`MovieAPI`) connected to a `movie_manager` database for managing movie details. It includes client-side validation to ensure data integrity and provides responsive design for an optimal user experience across devices.
+
 
 ## Features
 
-- **View Movies**: List of movies with details such as name, genre, rating, and year made.
-- **Add Movies**: Form to add new movies to the movie list.
-- **Backend Integration**: The app communicates with a `MovieAPI` that interacts with the `movie_manager` database.
-- **Responsive**: Optimized for both desktop and mobile views.
+- **View Movies**: Display a list of movies with details such as name, genre, rating, and year made, dynamically retrieved from the backend API.
+- **Add Movies**: A form to add new movies, including validation to ensure:
+  - `rating` is a numeric value between 1 and 10.
+  - Required fields are filled out before submission.
+- **Edit Movies**: Populate movie details into an editable form, allowing updates with validation for `rating` and other required fields.
+- **Delete Movies**: Remove movies from the list with immediate updates to both the frontend and backend.
+- **Frontend Validation**: Includes client-side checks to prevent invalid or incomplete data submissions.
+- **Backend Integration**: Communicates with a `MovieAPI` connected to the `movie_manager` database for seamless data synchronization.
+- **Error and Success Handling**: Displays user-friendly feedback messages for successful operations or errors during adding, updating
+
 
 ## Technologies Used
 
