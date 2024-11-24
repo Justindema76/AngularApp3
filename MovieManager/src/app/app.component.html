@@ -110,8 +110,6 @@
             </td>
             </tr>
             <tr>
-             
-              
           </tr>
 
         </tbody>
@@ -132,8 +130,8 @@
           <th>Genre</th>
           <th>Rating</th>
           <th>Year Made</th>
-          <th>Edit Movie</th>
-          <th>Delete Movie</th>
+          <th>Edit</th>
+          <th>Delete</th>
         </tr>
       </thead>
       <tbody>
@@ -185,14 +183,14 @@
           </button>
           </td>
           <td><!-- Delete Button -->
-            <!-- <button
+            <button
               type="button"
               value="Delete"
               class="btn btn-danger btn-sm"
-              (click)="deleteMovie(movie.movieID)"
+              (click)="deleteMovie(movie.movieID? movie.movieID:0 )"
               >
               Delete
-            </button> -->
+            </button>
           </td>
         </tr>
       </tbody>

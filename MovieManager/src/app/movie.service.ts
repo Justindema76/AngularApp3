@@ -35,8 +35,10 @@ export class MovieService {
     return this.http.put(`${this.baseUrl}/edit`, {data: movie});
   }
 
-  delete(movieID: number): Observable<any> {
-    const params = new HttpParams().set('movieID', movieID.toString());
+  delete(movieID: any) {
+    const params = new HttpParams()
+      .set('movieID', movieID.toString());
+
     return this.http.delete(`${this.baseUrl}/delete`, { params: params });
   }
 }

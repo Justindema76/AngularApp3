@@ -83,26 +83,23 @@ export class AppComponent implements OnInit {
   
     this.movieService.edit(updatedMovie).subscribe(
       (res) => {
-        this.success = 'Updated {{movie.genre}} successfully';
+        this.success = 'Updated successfully';
       },
       (err) => (this.error = err)
     );
   }
-  
-  
-
-  
-  // deleteMovie(movieID: number): void {
-  //   this.movieService.delete(movieID).subscribe(
-  //     () => {
-  //       this.movies = this.movies.filter(movie => movie.movieID !== movieID);
-  //       this.success = 'Movie deleted successfully!';
-  //     },
-  //     (err) => {
-  //       this.error = 'Failed to delete movie: ' + err.message;
-  //     }
-  //   );
-  // }
+  deleteMovie(movieID: number){
+    this.resetAlerts();
+    this.movieService.delete(movieID).subscribe(
+      () => {
+        this.movies = this.movies.filter(movie => movie.movieID !== movieID);
+        this.success = 'Movie deleted successfully!';
+      },
+      (err) => {
+        this.error = 'Failed to delete movie: ' + err.message;
+      }
+    );
+  }
   }
  
   
