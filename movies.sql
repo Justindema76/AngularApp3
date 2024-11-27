@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Nov 20, 2024 at 01:51 PM
+-- Generation Time: Nov 27, 2024 at 11:53 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.1.17
 
@@ -29,10 +29,10 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `movies` (
   `movieID` int(11) NOT NULL,
-  `movieName` varchar(255) NOT NULL,
-  `genre` varchar(100) NOT NULL,
+  `movieName` varchar(255) DEFAULT NULL,
+  `genre` varchar(100) DEFAULT NULL,
   `rating` varchar(50) DEFAULT NULL,
-  `yearMade` varchar(4) DEFAULT NULL,
+  `yearMade` varchar(50) DEFAULT NULL,
   `imageName` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -41,17 +41,15 @@ CREATE TABLE `movies` (
 --
 
 INSERT INTO `movies` (`movieID`, `movieName`, `genre`, `rating`, `yearMade`, `imageName`) VALUES
-(1, 'The Shawshank Redemption', 'Drama', '9.3', '1994', 'shawshank.jpg'),
-(2, 'The Dark Knight', 'Action', '9.0', '2008', 'dark_knight.jpg'),
-(3, 'Inception', 'Sci-Fi', '8.8', '2010', 'inception.jpg'),
-(4, 'The Godfather', 'Crime', '9.2', '1972', 'godfather.jpg'),
-(5, 'Pulp Fiction', 'Crime', '8.9', '1994', 'pulp_fiction.jpg'),
-(6, 'Forrest Gump', 'Drama', '8.8', '1994', 'forrest_gump.jpg'),
-(7, 'The Matrix', 'Sci-Fi', '8.7', '1999', 'matrix.jpg'),
-(8, 'The Avengers', 'Action', '8.0', '2012', 'avengers.jpg'),
-(9, 'Fight Club', 'Drama', '8.8', '1999', 'fight_club.jpg'),
-(10, 'Interstellar', 'Sci-Fi', '8.6', '2014', 'interstellar.jpg'),
-(11, 'Avengers', 'Action', '10.0', '2012', NULL);
+(47, 'The Shawshank Redemption', 'Drama', '9.5', '1994', 'shawshank.jpg'),
+(48, 'The Dark Knight', 'Action', '9.0', '2008', 'dark_knight.jpg'),
+(49, 'Forrest Gump', 'Drama', '8.3', '1994', 'forrest_gump.jpg'),
+(50, 'Inception', 'Sci-Fi', '8.8', '2010', 'inception.jpg'),
+(51, 'The Godfather', 'Crime', '9.2', '1972', 'godfather.png'),
+(52, 'The Matrix', 'Sci-Fi', '8.7', '1999', 'matrix.jpg'),
+(53, 'Pulp Fiction', 'Crime', '8.9', '1994', 'pulp_fiction.jpg'),
+(54, 'Gladiator', 'Drama', '8.5', '2000', 'gladiator.jpg'),
+(55, 'The Silence of the Lambs', 'Thriller', '8.6', '1991', 'silence_of_the_lambs.jpg');
 
 --
 -- Indexes for dumped tables
@@ -71,7 +69,7 @@ ALTER TABLE `movies`
 -- AUTO_INCREMENT for table `movies`
 --
 ALTER TABLE `movies`
-  MODIFY `movieID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `movieID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
