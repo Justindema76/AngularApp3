@@ -2,7 +2,7 @@
 <div *ngIf="success" class="alert alert-success">{{success}}</div>
 
 <div id="theForm">
-  <div class="container">
+  
   <h2>Movie Form</h2>
   <form #f="ngForm" name="movieForm" (ngSubmit)="addMovie(f)">
     <div class="table-responsive">
@@ -13,6 +13,7 @@
             <th>Genre</th>
             <th>Rating 1-10</th>
             <th>Year Made</th>
+            <th>Image</th>
           </tr>
         </thead>
         <tbody>
@@ -37,7 +38,6 @@
             </td>
             <!-- GENRE -->
             <td>
-             
               <select
                 id="genre"
                 name="genre"
@@ -45,7 +45,7 @@
                 [(ngModel)]="movie.genre"
                 required
               >
-                <option value="" disabled>Select Genre</option>
+                <option value="" disabled>Select Genre</option> 
                 <option value="Action">Action</option>
                 <option value="Comedy">Comedy</option>
                 <option value="Drama">Drama</option>
@@ -54,8 +54,8 @@
                 <option value="Sci-Fi">Sci-Fi</option>
                 <option value="Thriller">Thriller</option>
                 <option value="Crime">Crime</option>
-                <!-- Add more options as necessary -->
               </select>
+            
               <div
                 class="invalid-feedback"
                 *ngIf="f.controls['genre']?.errors?.['required'] && f.controls['genre']?.touched"
@@ -88,6 +88,16 @@
                 [(ngModel)]="movie.yearMade"
               />
             </td>
+             <!-- image Name -->
+
+          <td>
+            <input type="file"
+            class="form-control"
+            name="imageName"
+            [(ngModel)]="movie.imageName"
+            #imageName="ngModel"        
+            (change)="onFileSelected($event)" />      
+          </td>
           </tr>
   
           <!-- Submit Button -->
@@ -110,25 +120,42 @@
     </div>
   </form>
 </div>
-</div>
+
 
 <div id="theList">
  
-  <div class="container">
+ 
     <h2>Movie List</h2>
     <table class="table table-bordered table-striped">
       <thead class="table-light">
         <tr>
+
+          <th>Image</th>
           <th>Movie Name</th>
-          <th>Genre</th>
           <th>Rating</th>
           <th>Year Made</th>
-          <th>Update</th>
+          <th>Edit</th>
           <th>Delete</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let movie of movies; let i = index;">
+    
+         <!-- image -->
+          <td>
+            <div class="col-3">        
+              <img src="http://localhost/movieapi/uploads/{{movie.imageName}}" width="auto" height="100" alt="image" />
+          </div>
+          <input type="text"
+          [(ngModel)]="movies[i].imageName"
+          class="form-control"
+          required
+          #imageName="ngModel"
+          [ngClass]="{ 'is-valid': imageName.touched && imageName.invalid }"
+          hidden>
+   
+          </td>
+            <!-- movie name -->
           <td>
             <input type="text"
             [(ngModel)]="movies[i].movieName"
@@ -137,18 +164,19 @@
             #movieName="ngModel"
             [ngClass]="{ 'is-valid': movieName.touched && movieName.valid, 'is-invalid': movieName.touched && movieName.invalid }">
           </td>
-          <td>
-            <select
-              [(ngModel)]="movies[i].genre"
-              class="form-control"
-              required
-              #genre="ngModel"
-              [ngClass]="{ 'is-valid': genre.touched && genre.valid, 'is-invalid': genre.touched && genre.invalid }"
-            >
-              <option value="" disabled>Select Genre</option>
-              <option *ngFor="let g of genres" [value]="g">{{ g }}</option>
-            </select>
-          </td>
+            <!-- gnere -->
+            <td>
+              <input
+                type="text"
+                [(ngModel)]="movies[i].genre"
+                class="form-control"
+                required
+                #genre="ngModel"
+                [ngClass]="{ 'is-valid': genre.touched && genre.valid, 'is-invalid': genre.touched && genre.invalid }"
+                placeholder="Enter Genre"
+              />
+            </td>
+            
           
           <td>
             <input type="text"
@@ -166,15 +194,17 @@
             #yearMade="ngModel"
             [ngClass]="{ 'is-valid': yearMade.touched && yearMade.valid, 'is-invalid': yearMade.touched && yearMade.invalid }">
           </td>
+       
           <!-- UPDATE BUTTON -->
           <td >
             <button
             class="btn btn-success btn-sm"
-            [disabled]="movieName.invalid || genre.invalid || rating.invalid || yearMade.invalid"
-            (click)="updateMovie(movieName, genre.value, rating, yearMade, movie.movieID)">
+            [disabled]="movieName.invalid || rating.invalid || yearMade.invalid"
+            (click)="editMovie(movieName, genre, rating, yearMade, imageName, movie.movieID)">
             Update
           </button>
           </td>
+  
           <td><!-- Delete Button -->
             <button
               type="button"
@@ -190,4 +220,4 @@
     </table>
   </div>
   
-</div>
+

@@ -3,6 +3,7 @@ import { NgForm } from '@angular/forms';
 import { MovieService } from './movie.service';
 import { Movie } from './movie';
 import { HttpErrorResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-root',
@@ -12,10 +13,13 @@ import { HttpErrorResponse } from '@angular/common/http';
 export class AppComponent implements OnInit {
   movies: Movie[] = [];
   movie: Movie = { movieName: '', genre: '', rating: '', yearMade: '', imageName: '', movieID: '' };
+  
   error = '';
   success = '';
+  selectedFile: File | null = null;
+ 
   
-  genres: string[] = [
+  genre: string[] = [
     'Action',
     'Comedy',
     'Drama',
@@ -26,7 +30,7 @@ export class AppComponent implements OnInit {
     'Crime'
   ];
 
-  constructor(private movieService: MovieService) {}
+  constructor(private movieService: MovieService, private http: HttpClient) {}
 
   ngOnInit() {
     this.getMovies();
@@ -53,16 +57,20 @@ export class AppComponent implements OnInit {
   addMovie(f: NgForm): void {
     this.resetAlerts();
   
-    // Validate the rating before proceeding
-    const numericRating = parseFloat(this.movie.rating);
-    if (isNaN(numericRating) || numericRating < 1 || numericRating > 10) {
-      this.error = 'Rating must be a number between 1 and 10.';
-      return;
+    // Ensure the genre is a valid string (e.g., 'Unknown' if not selected)
+    if (!this.movie.genre) {
+      console.log('Genre was not selected, defaulting to "Unknown"');
+      this.movie.genre = 'Unknown';  // Default to 'Unknown' if no genre is selected
     }
   
+    // Log the movie object to the console before sending it
+    console.log('Adding movie:', this.movie);
+  
+    // Proceed with adding the movie
     this.movieService.add(this.movie).subscribe(
       (res: Movie) => {
-        this.movies.push(res); // Update the movie list
+        console.log('Successfully added movie:', res);  // Log the response after movie is added
+        this.movies.push(res);  // Update the movie list
         this.success = 'Movie successfully added';
         f.resetForm(); // Reset the form
       },
@@ -72,36 +80,38 @@ export class AppComponent implements OnInit {
       }
     );
   }
-  updateMovie(movieName: any, genre: string, rating: any, yearMade: any, movieID: any): void {
-    this.resetAlerts();
   
-    // Validate the rating before proceeding
-    const numericRating = parseFloat(rating.value);
-    if (isNaN(numericRating) || numericRating < 1 || numericRating > 10) {
-      this.error = 'Rating must be a number between 1 and 10.';
-      return;
+
+  onFileSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      this.selectedFile = input.files[0]; 
+      console.log('Selected file:', this.selectedFile.name); 
     }
-  
-    const updatedMovie = {
-      movieName: movieName.value,
-      genre: genre,
-      rating: rating.value,
-      yearMade: yearMade.value,
-      movieID: +movieID,
-    };
-  
-    this.movieService.update(updatedMovie).subscribe(
-      (res) => {
-        this.success = 'Updated successfully';
-        // Update the local movie list for UI consistency
-        const index = this.movies.findIndex((movie) => movie.movieID === +movieID);
-        if (index !== -1) {
-          this.movies[index] = { ...updatedMovie };
-        }
+  }
+
+  uploadFile(): void {
+    if (!this.selectedFile) {
+        return;
+    }
+    const formData = new FormData();
+    formData.append('image', this.selectedFile);
+ 
+    this.http.post('http://localhost/movieapi/upload', formData).subscribe(
+        response => console.log('File uploaded successfully:', response),
+        error => console.error('File upload failed:', error)
+    );    
+  }
+
+  editMovie(movieName: any, genre: any, rating: any, yearMade: any, imageName: any, movieID: any) {
+    this.resetAlerts();
+ 
+    this.movieService.edit({movieName: movieName.value, genre: genre.value, rating: rating.value, yearMade: yearMade.value, imageName: imageName.value, movieID: +movieID})
+    .subscribe(
+      (res) => {        
+        this.success = 'Successfully edited';        
       },
-      (err) => {
-        this.error = err.message || 'An error occurred while updating the movie.';
-      }
+      (err) => (this.error = err.message)
     );
   }
   

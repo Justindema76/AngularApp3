@@ -1,12 +1,12 @@
 # AngularApp3 Movie Manager App
-AngularApp Assignment#3 - EDIT AND DELETE FUNCTIONALITY ADDED
+AngularApp Assignment#3 - EDIT DELETE UPLOAD IMAGE
 
 This is an Angular-based movie manager application that enables users to view, add, edit, and delete movies. The app integrates with a backend API (`MovieAPI`) connected to a `movie_manager` database for managing movie details. It includes client-side validation to ensure data integrity and provides responsive design for an optimal user experience across devices.
 
 
 ## Features
 
-- **View Movies**: Display a list of movies with details such as name, genre, rating, and year made, dynamically retrieved from the backend API.
+- **View Movies**: Display a list of movies with details such as image of the movie poster, name, genre, rating, and year made, dynamically retrieved from the backend API.
 - **Add Movies**: A form to add new movies, including validation to ensure:
   - `rating` is a numeric value between 1 and 10.
   - Required fields are filled out before submission.

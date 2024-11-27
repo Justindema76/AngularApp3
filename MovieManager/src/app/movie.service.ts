@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs'; // Make sure to import Observable
-
 import { Movie } from './movie';
 
 @Injectable({
@@ -31,9 +30,16 @@ export class MovieService {
     );
   }
 
-  update(movie: Movie) {
-    return this.http.put(`${this.baseUrl}/update`, {data: movie});
+  edit(movie: Movie) {
+    console.log('Sending movie:', movie);
+    const movieData = {
+      data: movie
+    };
+    return this.http.put(`${this.baseUrl}/edit`, {data: movie});
   }
+  
+
+  
 
   delete(movieID: any) {
     const params = new HttpParams()
