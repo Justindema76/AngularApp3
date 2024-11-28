@@ -144,9 +144,12 @@
     
          <!-- image -->
           <td>
-            <div class="col-3">        
+            <div class="col3 d-flex justify-content-center align-items-center" style="height: 100%;">        
               <img src="http://localhost/movieapi/uploads/{{movie.imageName}}" width="auto" height="100" alt="image" />
           </div>
+          
+          
+          
           <input type="text"
           [(ngModel)]="movies[i].imageName"
           class="form-control"
